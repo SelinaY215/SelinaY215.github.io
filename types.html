@@ -1,23 +1,262 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <title>Types of Psych</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Exhibition | Selina's Hub</title>
+  <link rel="stylesheet" href="style.css">
   <style>
-    body { font-family:sans-serif; padding:2rem; background:#f9f9f9; }
-    h1 { color:#4a90e2; }
-    video { width:100%; max-width:720px; border-radius:.5rem; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
-    p { margin-top:.5rem; color:#555; }
-    a { display:inline-block; margin-top:1rem; color:#4a90e2; text-decoration:none; }
+    .exhibition-tabs {
+      display: flex;
+      justify-content: center;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .exhibition-tab {
+      padding: 1rem 2rem;
+      background: var(--accent);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+    
+    .exhibition-tab.active {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .exhibition-section {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    .exhibition-section.active {
+      display: block;
+    }
+    
+    .video-container {
+      margin: 2rem 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    
+    .timeline {
+      margin: 3rem 0;
+      position: relative;
+      padding-left: 50px;
+    }
+    
+    .timeline:before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--accent);
+    }
+    
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+    }
+    
+    .timeline-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    
+    .timeline-year {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 40px;
+      height: 40px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+    
+    .timeline-content {
+      background: white;
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      margin-left: 60px;
+      box-shadow: var(--shadow);
+    }
+    
+    .quiz-container {
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius);
+      margin: 2rem 0;
+    }
+    
+    .quiz-option {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      background: var(--light);
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: left;
+    }
+    
+    .quiz-option:hover {
+      background: var(--accent);
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
-  <h1>Types of Psych</h1>
-  <video controls>
-    <source src="videos/types_of_psych.mp4" type="video/mp4" />
-    您的浏览器不支持 video 标签。
-  </video>
-  <p>section1</p>
-  <a href="index.html">← Back to Home</a>
+  <header>
+    <div class="logo-container">
+      <img src="images/redheart.png" alt="Mental Health Heart Logo" class="heart-logo">
+      <span class="site-title">Selina's Mental Health Hub</span>
+    </div>
+    
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="types.html">Digital Exhibition</a>
+      <a href="discussions.html">Video Studio</a>
+      <a href="science.html">Reading Corner</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+  
+  <main class="container">
+    <h1>Digital Psychology Exhibition</h1>
+    <p class="subtitle">Interactive exploration of psychological concepts</p>
+    
+    <div class="exhibition-tabs">
+      <button class="exhibition-tab active" onclick="openExhibition('women')">Women's Psychology</button>
+      <button class="exhibition-tab" onclick="openExhibition('child')">Child Development</button>
+      <button class="exhibition-tab" onclick="openExhibition('culture')">Cross-Cultural</button>
+    </div>
+    
+    <section id="women" class="exhibition-section active">
+      <h2>Women's Psychological Development</h2>
+      
+      <div class="video-container">
+        <video controls poster="videos/women_psych_thumb.jpg">
+          <source src="videos/women_psych.mp4" type="video/mp4">
+        </video>
+      </div>
+      
+      <div class="video-actions">
+        <button class="btn" onclick="likeVideo()">❤️ Like</button>
+        <button class="btn">💬 Comment</button>
+        <button class="btn">↗️ Share</button>
+      </div>
+      
+      <div class="timeline">
+        <h3>Key Milestones in Feminist Psychology</h3>
+        
+        <div class="timeline-item">
+          <div class="timeline-year">1960s</div>
+          <div class="timeline-content">
+            First wave of feminist psychology challenging male-dominated theories
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-year">1974</div>
+          <div class="timeline-content">
+            Establishment of APA's Division 35 (Psychology of Women)
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="child" class="exhibition-section">
+      <h2>Child Cognitive Development</h2>
+      
+      <div class="video-container">
+        <video controls poster="videos/child_dev_thumb.jpg">
+          <source src="videos/child_development.mp4" type="video/mp4">
+        </video>
+      </div>
+      
+      <div class="quiz-container">
+        <h3>Test Your Knowledge</h3>
+        <p>At what age do children typically develop object permanence?</p>
+        
+        <button class="quiz-option" onclick="checkAnswer(this, true)">8-12 months</button>
+        <button class="quiz-option" onclick="checkAnswer(this, false)">2-3 years</button>
+        <button class="quiz-option" onclick="checkAnswer(this, false)">Birth-3 months</button>
+      </div>
+    </section>
+    
+    <section id="culture" class="exhibition-section">
+      <h2>Cross-Cultural Psychology</h2>
+      
+      <div class="video-container">
+        <video controls poster="videos/culture_thumb.jpg">
+          <source src="videos/cross_cultural.mp4" type="video/mp4">
+        </video>
+      </div>
+      
+      <div class="comparison-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+        <div class="card">
+          <h3>Western Cultures</h3>
+          <p>Emphasis on individual emotional experience</p>
+        </div>
+        <div class="card">
+          <h3>Eastern Cultures</h3>
+          <p>Focus on social harmony and contextual emotions</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <footer id="contact">
+    <div class="container">
+      <p>© 2025 Selina's Mental Health Hub. All rights reserved.</p>
+    </div>
+  </footer>
+  
+  <script>
+    function openExhibition(sectionId) {
+      // Hide all sections
+      document.querySelectorAll('.exhibition-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      
+      // Deactivate all tabs
+      document.querySelectorAll('.exhibition-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // Show selected section and activate tab
+      document.getElementById(sectionId).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+    
+    function checkAnswer(button, isCorrect) {
+      if(isCorrect) {
+        button.style.background = 'var(--secondary)';
+        button.style.color = 'white';
+      } else {
+        button.style.background = '#ff6b6b';
+        button.style.color = 'white';
+      }
+    }
+  </script>
 </body>
 </html>

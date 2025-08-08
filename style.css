@@ -1,14 +1,13 @@
 :root {
-  --color-primary:   #5aa9e6;
-  --color-accent:    #7bdcb5;
-  --color-bg:        #f0f7fa;
-  --color-card-bg:   #ffffff;
-  --color-text:      #333333;
-  --color-muted:     #666666;
-  --color-shadow:    rgba(0,0,0,0.08);
-  --font-family:     "Segoe UI", Tahoma, Arial, sans-serif;
-  --radius:          0.5rem;
-  --spacing:         1.5rem;
+  /* 温暖的心理健康配色方案 */
+  --primary: #E63946;  /* 活力红 */
+  --secondary: #457B9D; /* 宁静蓝 */
+  --accent: #A8DADC;   /* 柔和青 */
+  --light: #F1FAEE;    /* 象牙白 */
+  --dark: #1D3557;     /* 深海蓝 */
+  --radius: 12px;
+  --shadow: 0 4px 20px rgba(0,0,0,0.1);
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 * {
@@ -18,98 +17,129 @@
 }
 
 body {
-  font-family: var(--font-family);
-  background: var(--color-bg);
-  color: var(--color-text);
+  font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+  color: var(--dark);
   line-height: 1.6;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  background-color: var(--light);
 }
 
-a {
-  color: var(--color-primary);
-  text-decoration: none;
-  margin: 0 .5rem;
-}
-a:hover {
-  text-decoration: underline;
-}
-
+/* 统一导航栏样式 */
 header {
-  background: var(--color-primary);
-  color: #fff;
-  padding: calc(var(--spacing) * 1.2) var(--spacing);
-  text-align: center;
-  box-shadow: 0 2px 6px var(--color-shadow);
-}
-header h1 {
-  font-size: 2rem;
-  margin-bottom: .5rem;
-}
-header p {
-  font-size: 1rem;
-}
-header nav {
-  margin-top: var(--spacing);
-  font-size: 0.95rem;
-}
-
-main.container {
-  flex: 1;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing);
-  padding: var(--spacing);
-}
-
-@media (min-width: 768px) {
-  main.container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-section.video-card {
-  background: var(--color-card-bg);
-  padding: var(--spacing);
-  border-radius: var(--radius);
-  box-shadow: 0 4px 12px var(--color-shadow);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1.5rem 5%;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  transition: transform .2s ease-in-out;
-}
-section.video-card:hover {
-  transform: translateY(-4px);
-}
-
-section.video-card h2 {
-  color: var(--color-primary);
-  margin-bottom: .75rem;
-  font-size: 1.25rem;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-section.video-card video {
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.heart-logo {
+  height: 40px;
+  transition: var(--transition);
+}
+
+.heart-logo:hover {
+  transform: scale(1.1) rotate(10deg);
+}
+
+.site-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+}
+
+nav {
+  display: flex;
+  gap: 2rem;
+}
+
+nav a {
+  color: var(--dark);
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+nav a:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--primary);
+  transition: var(--transition);
+}
+
+nav a:hover:after {
   width: 100%;
+}
+
+/* 主要内容容器 */
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+}
+
+/* 卡片通用样式 */
+.card {
+  background: white;
   border-radius: var(--radius);
-  box-shadow: 0 2px 8px var(--color-shadow);
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
 }
 
-section.video-card .caption {
-  margin-top: .5rem;
-  font-style: italic;
-  color: var(--color-muted);
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
-section.video-card video:focus {
-  outline: 2px solid var(--color-accent);
+/* 按钮样式 */
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.8rem;
+  background: var(--primary);
+  color: white;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  text-decoration: none;
 }
 
-footer {
-  text-align: center;
-  padding: var(--spacing) .5rem;
-  background: #fff;
-  color: var(--color-muted);
-  box-shadow: 0 -2px 6px var(--color-shadow);
-  font-size: .875rem;
+.btn:hover {
+  background: var(--secondary);
+  transform: translateY(-3px);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  
+  .logo-container {
+    margin-bottom: 1rem;
+  }
+  
+  nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
 }
