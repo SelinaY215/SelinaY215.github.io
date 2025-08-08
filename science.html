@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reading Corner | Selina's Hub</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .resource-list {
+      margin: 2rem 0;
+    }
+    
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    
+    .resource-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+    }
+    
+    .resource-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    
+    .resource-card h3 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    
+    .resource-meta {
+      color: var(--secondary);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .search-bar {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: var(--radius);
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+    
+    .category-title {
+      margin: 3rem 0 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="images/redheart.png" alt="Mental Health Heart Logo" class="heart-logo">
+      <span class="site-title">Selina's Mental Health Hub</span>
+    </div>
+    
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="types.html">Digital Exhibition</a>
+      <a href="discussions.html">Video Studio</a>
+      <a href="science.html">Reading Corner</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+  
+  <main class="container">
+    <h1>Psychology Reading Corner</h1>
+    <p class="subtitle">Curated resources for psychology enthusiasts</p>
+    
+    <input type="text" class="search-bar" placeholder="Search resources...">
+    
+    <div class="resource-list">
+      <h2 class="category-title">📚 Beginner-Friendly Resources</h2>
+      <div class="resource-grid">
+        <div class="resource-card">
+          <h3>APA Psychology Resources for Beginners</h3>
+          <div class="resource-meta">American Psychological Association</div>
+          <p>A great starting point for clear and trustworthy basics about psychology.</p>
+          <a href="https://www.psychology.org/resources/free-online-resources-for-psychology-beginners" class="btn" target="_blank">Visit Resource</a>
+        </div>
+        
+        <div class="resource-card">
+          <h3>What Is Cross-Cultural Psychology?</h3>
+          <div class="resource-meta">Verywell Mind</div>
+          <p>Understand how culture affects our minds and behaviors.</p>
+          <a href="https://www.verywellmind.com/what-is-cross-cultural-psychology-2794903" class="btn" target="_blank">Read Article</a>
+        </div>
+        
+        <div class="resource-card">
+          <h3>How Ethnocentrism Influences Psychology</h3>
+          <div class="resource-meta">Verywell Mind</div>
+          <p>Shows how thinking our own culture is "normal" can affect how we see others.</p>
+          <a href="https://www.verywellmind.com/how-ethnocentrism-influences-psychology-7553045" class="btn" target="_blank">Read Article</a>
+        </div>
+      </div>
+      
+      <h2 class="category-title">📘 For Curious Minds</h2>
+      <div class="resource-grid">
+        <div class="resource-card">
+          <h3>Evolutionary Psychology and Feminism</h3>
+          <div class="resource-meta">Research Paper</div>
+          <p>Explores the science vs. feminism debate in psychology.</p>
+          <a href="https://labs.la.utexas.edu/buss/files/2015/09/Evolutionary-Psychology-and-Feminism-Final-Published-2011.pdf" class="btn" target="_blank">Download Paper</a>
+        </div>
+        
+        <div class="resource-card">
+          <h3>Women's Psychological Growth</h3>
+          <div class="resource-meta">Cross-Cultural Study</div>
+          <p>How cultural contexts shape women's development.</p>
+          <a href="https://www.researchgate.net/publication/310474015_On_Becoming_a_Feminist_Psychologist" class="btn" target="_blank">View Study</a>
+        </div>
+        
+        <div class="resource-card">
+          <h3>Cultural Diversity in Psychology</h3>
+          <div class="resource-meta">Research Article</div>
+          <p>Gets deep into how race and identity affect mental health.</p>
+          <a href="https://escholarship.org/content/qt6bv7t715/qt6bv7t715_noSplash_3a5c23033f0b6376ea75ba81b3b2dd22.pdf" class="btn" target="_blank">Read Article</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <footer id="contact">
+    <div class="container">
+      <p>© 2025 Selina's Mental Health Hub. All rights reserved.</p>
+    </div>
+  </footer>
+  
+  <script>
+    // 搜索功能
+    document.querySelector('.search-bar').addEventListener('input', function(e) {
+      const searchTerm = e.target.value.toLowerCase();
+      const cards = document.querySelectorAll('.resource-card');
+      
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(searchTerm) ? 'block' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>

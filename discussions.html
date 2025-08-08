@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Studio | Selina's Hub</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --dark-bg: #1E2A3A; /* 深蓝灰替代纯黑 */
+      --darker-bg: #16202D; /* 更深的背景色 */
+      --light-bg: #F5F7FA; /* 浅色背景 */
+      --text-on-dark: #E0E6ED; /* 深色背景上的文字 */
+    }
+    
+    .video-container {
+      position: relative;
+      margin-bottom: 2rem;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--darker-bg); /* 替换纯黑 */
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    video {
+      width: 100%;
+      display: block;
+      background: var(--dark-bg); /* 替换纯黑 */
+    }
+    
+    .video-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    
+    .action-btn {
+      padding: 0.6rem 1.2rem;
+      background: var(--accent);
+      color: var(--dark);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .action-btn:hover {
+      background: var(--secondary);
+      color: white;
+    }
+    
+    .current-video-title {
+      font-size: 1.2rem;
+      margin: 0.5rem 0;
+      color: var(--text-on-dark); /* 深色背景上的文字 */
+      font-weight: 600;
+    }
+
+    .video-tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    
+    .video-tab {
+      padding: 0.8rem 1.5rem;
+      background: var(--accent);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+    
+    .video-tab.active {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .video-meta {
+      color: var(--text-on-dark); /* 深色背景上的文字 */
+      opacity: 0.8;
+      font-size: 0.9rem;
+    }
+    
+    .video-description {
+      background: var(--dark-bg); /* 替换浅色背景 */
+      color: var(--text-on-dark); /* 深色背景上的文字 */
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    
+    body {
+      background: var(--light-bg); /* 页面主体背景 */
+    }
+    
+    .video-container, .video-description {
+      border: 1px solid rgba(255,255,255,0.1); /* 添加细微边框 */
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="images/redheart.png" alt="Mental Health Heart Logo" class="heart-logo">
+      <span class="site-title">Selina's Mental Health Hub</span>
+    </div>
+    
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="types.html">Digital Exhibition</a>
+      <a href="discussions.html" class="active">Video Studio</a>
+      <a href="science.html">Reading Corner</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+  
+  <main class="container">
+    <h1>Psychology Video Studio</h1>
+    <p class="subtitle">Student-created content exploring psychological concepts</p>
+    
+    <!-- 视频标签页 -->
+    <div class="video-tabs">
+      <button class="video-tab active" onclick="loadVideo('science')">Science & Color</button>
+      <button class="video-tab" onclick="loadVideo('types')">Types of Psychology</button>
+      <button class="video-tab" onclick="loadVideo('main')">Main Discussion</button>
+      <button class="video-tab" onclick="loadVideo('filmmaking')">Filmmaking Experience</button>
+    </div>
+    
+    <!-- 主视频播放区 -->
+    <div class="video-container" id="mainVideoContainer">
+      <video controls id="mainVideoPlayer">
+        <source src="videos/science_photos_color.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <p class="current-video-title">Science & Color Psychology</p>
+      <p class="video-meta">Length: 14:30 | Views: 723</p>
+      
+      <div class="video-description" id="videoDescription">
+        Exploring the fascinating connection between color perception and psychological responses.
+      </div>
+      
+      <div class="video-actions">
+        <button class="action-btn" onclick="shareVideo()">↗️ Share</button>
+      </div>
+    </div>
+  </main>
+  
+  <footer id="contact">
+    <div class="container">
+      <p>© 2025 Selina's Mental Health Hub. All rights reserved.</p>
+    </div>
+  </footer>
+  
+  <script>
+    // 加载视频函数
+    function loadVideo(videoType) {
+      let videoData = {
+        'science': {
+          src: 'videos/science_photos_color.mp4',
+          title: 'Science & Color Psychology',
+          length: '14:30',
+          views: '723',
+          desc: 'Exploring the fascinating connection between color perception and psychological responses.'
+        },
+        'types': {
+          src: 'videos/types_of_psych.mp4',
+          title: 'Types of Psychology',
+          length: '16:15',
+          views: '589',
+          desc: 'An overview of major branches of psychology and their applications.'
+        },
+        'main': {
+          src: 'videos/psych_discussions.mp4',
+          title: 'Main Psychology Discussion',
+          length: '18:42',
+          views: '1,245',
+          desc: 'In-depth conversations about current topics in psychology.'
+        },
+        'filmmaking': {
+          src: 'videos/filmmaking_experience.mp4',
+          title: 'My Filmmaking Experience',
+          length: '12:20',
+          views: '356',
+          desc: 'Microfilm I participated in as part of the filming crew. This video documents my hands-on experience in film production and storytelling techniques.'
+        }
+      };
+
+      const data = videoData[videoType];
+      const videoPlayer = document.getElementById('mainVideoPlayer');
+      
+      videoPlayer.src = data.src;
+      document.querySelector('.current-video-title').textContent = data.title;
+      document.querySelector('.video-meta').textContent = `Length: ${data.length} | Views: ${data.views}`;
+      document.getElementById('videoDescription').textContent = data.desc;
+      
+      // 更新标签页状态
+      document.querySelectorAll('.video-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      event.currentTarget.classList.add('active');
+    }
+    
+    // 分享功能
+    function shareVideo() {
+      const currentVideo = document.querySelector('.current-video-title').textContent;
+      if (navigator.share) {
+        navigator.share({
+          title: currentVideo,
+          text: 'Check out this interesting psychology video',
+          url: window.location.href
+        }).catch(err => {
+          console.log('Error sharing:', err);
+        });
+      } else {
+        alert(`Share this video: ${currentVideo}\nURL: ${window.location.href}`);
+      }
+    }
+  </script>
+</body>
+</html>
