@@ -21,6 +21,9 @@ body {
   color: var(--dark);
   line-height: 1.6;
   background-color: var(--light);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* 统一导航栏样式 */
@@ -69,6 +72,7 @@ nav a {
   font-weight: 500;
   position: relative;
   padding: 0.5rem 0;
+  transition: var(--transition);
 }
 
 nav a:after {
@@ -82,8 +86,14 @@ nav a:after {
   transition: var(--transition);
 }
 
-nav a:hover:after {
+nav a:hover:after,
+nav a.active:after {
   width: 100%;
+}
+
+nav a.active {
+  color: var(--primary);
+  font-weight: 600;
 }
 
 /* 主要内容容器 */
@@ -91,6 +101,7 @@ nav a:hover:after {
   max-width: 1200px;
   margin: 2rem auto;
   padding: 0 2rem;
+  flex: 1;
 }
 
 /* 卡片通用样式 */
@@ -126,6 +137,63 @@ nav a:hover:after {
   transform: translateY(-3px);
 }
 
+/* 联系页面特定样式 */
+.contact-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  animation: fadeIn 0.6s ease-out;
+}
+
+.about-me {
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.contact-info {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--accent);
+}
+
+.contact-info h2 {
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.contact-info p {
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.placeholder {
+  color: var(--secondary);
+  font-style: italic;
+}
+
+/* 页脚样式 */
+footer {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255,255,255,0.9);
+  border-top: 1px solid var(--accent);
+  margin-top: auto;
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
   header {
@@ -141,5 +209,14 @@ nav a:hover:after {
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
+  }
+  
+  .container {
+    padding: 0 1rem;
+  }
+  
+  .card,
+  .contact-container {
+    padding: 1.5rem;
   }
 }

@@ -6,6 +6,7 @@
   <title>Contact | Selina's Hub</title>
   <link rel="stylesheet" href="style.css">
   <style>
+    /* 联系页面专属样式 */
     .contact-container {
       max-width: 800px;
       margin: 2rem auto;
@@ -13,32 +14,56 @@
       background: white;
       border-radius: var(--radius);
       box-shadow: var(--shadow);
+      animation: fadeIn 0.6s ease-out;
     }
     
     .about-me {
       line-height: 1.8;
       margin-bottom: 2rem;
+      color: var(--dark);
     }
     
     .contact-info {
       margin-top: 2rem;
       padding-top: 2rem;
-      border-top: 1px solid var(--accent);
+      border-top: 2px solid var(--accent);
     }
     
     .contact-info h2 {
       color: var(--primary);
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
     }
     
     .contact-info p {
-      margin: 0.5rem 0;
+      margin: 1rem 0;
       font-size: 1.1rem;
+      display: flex;
+      align-items: center;
     }
     
     .placeholder {
       color: var(--secondary);
       font-style: italic;
+      margin-left: 0.5rem;
+    }
+    
+    /* 动画效果 */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+      .contact-container {
+        padding: 1.5rem;
+        margin: 1rem;
+      }
+      
+      .contact-info h2 {
+        font-size: 1.3rem;
+      }
     }
   </style>
 </head>
@@ -72,9 +97,9 @@
       </div>
       
       <div class="contact-info">
-        <h2>Contact Information</h2>
-        <p>Email: <span class="placeholder">ruofany08@outlook.com</span></p>
-        <p>Phone: <span class="placeholder">[Your phone number will be added here]</span></p>
+        <h2>📬 Contact Information</h2>
+        <p>✉️ Email: <span class="placeholder">ruofany08@outlook.com</span></p>
+        <p>📱 Phone: <span class="placeholder">[Your phone number will be added here]</span></p>
       </div>
     </div>
   </main>
@@ -84,5 +109,12 @@
       <p>© 2025 Selina's Mental Health Hub. All rights reserved.</p>
     </div>
   </footer>
+  
+  <script>
+    // 确保页面加载时滚动到顶部
+    window.addEventListener('load', function() {
+      window.scrollTo(0, 0);
+    });
+  </script>
 </body>
 </html>
