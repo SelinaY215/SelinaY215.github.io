@@ -5,14 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reading Corner | Selina's Hub</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
-    .resource-list {
+    .reading-tabs {
+      display: flex;
+      justify-content: center;
       margin: 2rem 0;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .reading-tab {
+      padding: 1rem 2rem;
+      background: var(--accent);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+    
+    .reading-tab.active {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .reading-section {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    .reading-section.active {
+      display: block;
     }
     
     .resource-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
       gap: 2rem;
       margin: 2rem 0;
     }
@@ -23,6 +52,10 @@
       padding: 1.5rem;
       transition: var(--transition);
       box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      border-left: 4px solid var(--primary);
     }
     
     .resource-card:hover {
@@ -33,21 +66,56 @@
     .resource-card h3 {
       color: var(--primary);
       margin-bottom: 0.5rem;
+      font-size: 1.2rem;
     }
     
     .resource-meta {
-      color: var(--secondary);
-      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
       margin-bottom: 1rem;
+      font-size: 0.85rem;
+      color: var(--secondary);
+    }
+    
+    .resource-type {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    
+    .resource-difficulty {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    
+    .resource-description {
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+      color: var(--dark);
+    }
+    
+    .search-container {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
     }
     
     .search-bar {
-      width: 100%;
+      flex: 1;
       padding: 1rem;
       border: 1px solid #ddd;
       border-radius: var(--radius);
-      margin-bottom: 2rem;
       font-size: 1rem;
+    }
+    
+    .filter-select {
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      background: white;
     }
     
     .category-title {
@@ -55,6 +123,57 @@
       padding-bottom: 0.5rem;
       border-bottom: 2px solid var(--accent);
       font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .featured-topics {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    
+    .topic-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      border-top: 3px solid var(--secondary);
+    }
+    
+    .topic-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    
+    .topic-card h3 {
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+    
+    .topic-card p {
+      color: var(--secondary);
+      margin-bottom: 1rem;
+    }
+    
+    .difficulty-beginner {
+      color: #4CAF50;
+    }
+    
+    .difficulty-intermediate {
+      color: #FFC107;
+    }
+    
+    .difficulty-advanced {
+      color: #F44336;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -76,59 +195,269 @@
   
   <main class="container">
     <h1>Psychology Reading Corner</h1>
-    <p class="subtitle">Curated resources for psychology enthusiasts</p>
+    <p class="subtitle">Curated resources for psychology enthusiasts at all levels</p>
     
-    <input type="text" class="search-bar" placeholder="Search resources...">
+    <div class="search-container">
+      <input type="text" class="search-bar" placeholder="Search resources...">
+      <select class="filter-select" id="categoryFilter">
+        <option value="all">All Categories</option>
+        <option value="beginner">Beginner Resources</option>
+        <option value="feminist">Feminist Psychology</option>
+        <option value="child">Child Development</option>
+        <option value="cultural">Cultural Psychology</option>
+        <option value="featured">Featured Topics</option>
+      </select>
+    </div>
     
-    <div class="resource-list">
-      <h2 class="category-title">📚 Beginner-Friendly Resources</h2>
+    <div class="reading-tabs">
+      <button class="reading-tab active" onclick="openReadingSection('beginner')">Beginner Resources</button>
+      <button class="reading-tab" onclick="openReadingSection('indepth')">In-Depth Studies</button>
+      <button class="reading-tab" onclick="openReadingSection('featured')">Featured Topics</button>
+    </div>
+    
+    <section id="beginner" class="reading-section active">
+      <h2 class="category-title"><i class="fas fa-book-open"></i> Beginner-Friendly Resources</h2>
+      <p>Start your psychology journey with these accessible and engaging resources.</p>
+      
       <div class="resource-grid">
         <div class="resource-card">
           <h3>APA Psychology Resources for Beginners</h3>
-          <div class="resource-meta">American Psychological Association</div>
-          <p>A great starting point for clear and trustworthy basics about psychology.</p>
+          <div class="resource-meta">
+            <span class="resource-type"><i class="fas fa-globe"></i> Website</span>
+            <span class="resource-difficulty difficulty-beginner"><i class="fas fa-star"></i> Beginner</span>
+            <span><i class="far fa-clock"></i> 15 min</span>
+          </div>
+          <div class="resource-description">
+            A great starting point for clear and trustworthy basics about psychology.
+          </div>
           <a href="https://www.psychology.org/resources/free-online-resources-for-psychology-beginners" class="btn" target="_blank">Visit Resource</a>
         </div>
         
         <div class="resource-card">
           <h3>What Is Cross-Cultural Psychology?</h3>
-          <div class="resource-meta">Verywell Mind</div>
-          <p>Understand how culture affects our minds and behaviors.</p>
+          <div class="resource-meta">
+            <span class="resource-type"><i class="fas fa-globe"></i> Website</span>
+            <span class="resource-difficulty difficulty-beginner"><i class="fas fa-star"></i> Beginner</span>
+            <span><i class="far fa-clock"></i> 10 min</span>
+          </div>
+          <div class="resource-description">
+            Understand how culture affects our minds and behaviors with simple examples.
+          </div>
           <a href="https://www.verywellmind.com/what-is-cross-cultural-psychology-2794903" class="btn" target="_blank">Read Article</a>
         </div>
         
         <div class="resource-card">
           <h3>How Ethnocentrism Influences Psychology</h3>
-          <div class="resource-meta">Verywell Mind</div>
-          <p>Shows how thinking our own culture is "normal" can affect how we see others.</p>
+          <div class="resource-meta">
+            <span class="resource-type"><i class="fas fa-globe"></i> Website</span>
+            <span class="resource-difficulty difficulty-beginner"><i class="fas fa-star"></i> Beginner</span>
+            <span><i class="far fa-clock"></i> 12 min</span>
+          </div>
+          <div class="resource-description">
+            Shows how thinking our own culture is "normal" can affect how we see others.
+          </div>
           <a href="https://www.verywellmind.com/how-ethnocentrism-influences-psychology-7553045" class="btn" target="_blank">Read Article</a>
         </div>
+        
+        <div class="resource-card">
+          <h3>Psychology's Feminist Voices</h3>
+          <div class="resource-meta">
+            <span class="resource-type"><i class="fas fa-globe"></i> Website</span>
+            <span class="resource-difficulty difficulty-beginner"><i class="fas fa-star"></i> Beginner</span>
+            <span><i class="far fa-clock"></i> 20 min</span>
+          </div>
+          <div class="resource-description">
+            Interesting stories about women in psychology—good for learning through real people.
+          </div>
+          <a href="https://en.wikipedia.org/wiki/Psychology%27s_Feminist_Voices" class="btn" target="_blank">Visit Resource</a>
+        </div>
+        
+        <div class="resource-card">
+          <h3>Maria Konnikova: Psychology of the Everyday</h3>
+          <div class="resource-meta">
+            <span class="resource-type"><i class="fas fa-globe"></i> Website</span>
+            <span class="resource-difficulty difficulty-beginner"><i class="fas fa-star"></i> Beginner</span>
+            <span><i class="far fa-clock"></i> 25 min</span>
+          </div>
+          <div class="resource-description">
+            Explains how psychology is part of our everyday life in an engaging podcast-like format.
+          </div>
+          <a href="https://www.newyorker.com/culture/culture-desk/out-loud-maria-konnikovas-psychology-of-the-everyday" class="btn" target="_blank">Read Article</a>
+        </div>
       </div>
+    </section>
+    
+    <section id="indepth" class="reading-section">
+      <h2 class="category-title"><i class="fas fa-brain"></i> In-Depth Studies</h2>
+      <p>Dive deeper into specialized areas of psychological research and theory.</p>
       
-      <h2 class="category-title">📘 For Curious Minds</h2>
+      <h3 class="category-title"><i class="fas fa-venus"></i> Feminist Psychology</h3>
       <div class="resource-grid">
         <div class="resource-card">
           <h3>Evolutionary Psychology and Feminism</h3>
-          <div class="resource-meta">Research Paper</div>
-          <p>Explores the science vs. feminism debate in psychology.</p>
+          <div class="resource-meta">
+            <span class="resource-type"><i class="fas fa-file-pdf"></i> PDF</span>
+            <span class="resource-difficulty difficulty-advanced"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> Advanced</span>
+            <span><i class="far fa-clock"></i> 45 min</span>
+          </div>
+          <div class="resource-description">
+            A complex but fascinating exploration of the science vs. feminism debate in psychology.
+          </div>
           <a href="https://labs.la.utexas.edu/buss/files/2015/09/Evolutionary-Psychology-and-Feminism-Final-Published-2011.pdf" class="btn" target="_blank">Download Paper</a>
         </div>
         
         <div class="resource-card">
-          <h3>Women's Psychological Growth</h3>
-          <div class="resource-meta">Cross-Cultural Study</div>
-          <p>How cultural contexts shape women's development.</p>
-          <a href="https://www.researchgate.net/publication/310474015_On_Becoming_a_Feminist_Psychologist" class="btn" target="_blank">View Study</a>
+          <h3>What is Feminist Psychology?</h3>
+          <div class="resource-meta">
+            <span class="resource-type"><i class="fas fa-file-pdf"></i> PDF</span>
+            <span class="resource-difficulty difficulty-intermediate"><i class="fas fa-star"></i><i class="fas fa-star"></i> Intermediate</span>
+            <span><i class="far fa-clock"></i> 30 min</span>
+          </div>
+          <div class="resource-description">
+            Examines how psychology can sometimes ignore women's experiences and how that's changing.
+          </div>
+          <a href="https://fau.digital.flvc.org/islandora/object/fau%3A42308/datastream/OBJ/view" class="btn" target="_blank">View Resource</a>
         </div>
         
         <div class="resource-card">
-          <h3>Cultural Diversity in Psychology</h3>
-          <div class="resource-meta">Research Article</div>
-          <p>Gets deep into how race and identity affect mental health.</p>
-          <a href="https://escholarship.org/content/qt6bv7t715/qt6bv7t715_noSplash_3a5c23033f0b6376ea75ba81b3b2dd22.pdf" class="btn" target="_blank">Read Article</a>
+          <h3>On Becoming a Feminist Psychologist</h3>
+          <div class="resource-meta">
+            <span class="resource-type"><i class="fas fa-file-pdf"></i> PDF</span>
+            <span class="resource-difficulty difficulty-intermediate"><i class="fas fa-star"></i><i class="fas fa-star"></i> Intermediate</span>
+            <span><i class="far fa-clock"></i> 35 min</span>
+          </div>
+          <div class="resource-description">
+            A psychologist shares their personal journey of how their thinking evolved over time.
+          </div>
+          <a href="https://www.researchgate.net/publication/310474015_On_Becoming_a_Feminist_Psychologist" class="btn" target="_blank">View Study</a>
         </div>
       </div>
-    </div>
+      
+      <h3 class="category-title"><i class="fas fa-child"></i> Child Development</h3>
+      <div class="resource-grid">
+        <div class="resource-card">
+          <h3>The Science of Early Childhood Development</h3>
+          <div class="resource-meta">
+            <span class="resource-type"><i class="fas fa-file-pdf"></i> PDF</span>
+            <span class="resource-difficulty difficulty-advanced"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> Advanced</span>
+            <span><i class="far fa-clock"></i> 60 min</span>
+          </div>
+          <div class="resource-description">
+            Detailed research from Harvard about how children's brains develop in early years.
+          </div>
+          <a href="https://developingchild.harvard.edu/wp-content/uploads/2024/10/Science_Early_Childhood_Development.pdf" class="btn" target="_blank">Download Paper</a>
+        </div>
+        
+        <div class="resource-card">
+          <h3>Stages of Psychological Development of Child</h3>
+          <div class="resource-meta">
+            <span class="resource-type"><i class="fas fa-file-pdf"></i> PDF</span>
+            <span class="resource-difficulty difficulty-intermediate"><i class="fas fa-star"></i><i class="fas fa-star"></i> Intermediate</span>
+            <span><i class="far fa-clock"></i> 25 min</span>
+          </div>
+          <div class="resource-description">
+            Comprehensive overview of how children change psychologically as they grow.
+          </div>
+          <a href="https://www.researchgate.net/publication/353020101_Stages_of_Psychological_Development_of_Child-An_Overview" class="btn" target="_blank">View Study</a>
+        </div>
+      </div>
+      
+      <h3 class="category-title"><i class="fas fa-globe-americas"></i> Cultural Psychology & Diversity</h3>
+      <div class="resource-grid">
+        <div class="resource-card">
+          <h3>One Size Does Not Fit All</h3>
+          <div class="resource-meta">
+            <span class="resource-type"><i class="fas fa-file-pdf"></i> PDF</span>
+            <span class="resource-difficulty difficulty-intermediate"><i class="fas fa-star"></i><i class="fas fa-star"></i> Intermediate</span>
+            <span><i class="far fa-clock"></i> 30 min</span>
+          </div>
+          <div class="resource-description">
+            Examines why mental health care should be adapted based on cultural context.
+          </div>
+          <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2874609" class="btn" target="_blank">Read Article</a>
+        </div>
+        
+        <div class="resource-card">
+          <h3>Advancing Equity in Cross-Cultural Psychology</h3>
+          <div class="resource-meta">
+            <span class="resource-type"><i class="fas fa-file-pdf"></i> PDF</span>
+            <span class="resource-difficulty difficulty-advanced"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> Advanced</span>
+            <span><i class="far fa-clock"></i> 45 min</span>
+          </div>
+          <div class="resource-description">
+            Academic exploration of justice and equality in psychological research.
+          </div>
+          <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11024300" class="btn" target="_blank">Read Article</a>
+        </div>
+        
+        <div class="resource-card">
+          <h3>Cultural Diversity and Ethnic Minority Psychology</h3>
+          <div class="resource-meta">
+            <span class="resource-type"><i class="fas fa-file-pdf"></i> PDF</span>
+            <span class="resource-difficulty difficulty-advanced"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> Advanced</span>
+            <span><i class="far fa-clock"></i> 50 min</span>
+          </div>
+          <div class="resource-description">
+            Deep exploration of how race and identity affect mental health perspectives.
+          </div>
+          <a href="https://escholarship.org/content/qt6bv7t715/qt6bv7t715_noSplash_3a5c23033f0b6376ea75ba81b3b2dd22.pdf" class="btn" target="_blank">Read Article</a>
+        </div>
+        
+        <div class="resource-card">
+          <h3>Cultural Psychology, Diversity and Open Science</h3>
+          <div class="resource-meta">
+            <span class="resource-type"><i class="fas fa-file-pdf"></i> PDF</span>
+            <span class="resource-difficulty difficulty-advanced"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> Advanced</span>
+            <span><i class="far fa-clock"></i> 40 min</span>
+          </div>
+          <div class="resource-description">
+            Examines how research practices can better incorporate cultural diversity.
+          </div>
+          <a href="https://www.researchgate.net/publication/355469528_Cultural_Psychology_Diversity_and_Representation_in_Open_Science" class="btn" target="_blank">Read Article</a>
+        </div>
+        
+        <div class="resource-card">
+          <h3>Emoji Usage Across Cultures (East vs. West)</h3>
+          <div class="resource-meta">
+            <span class="resource-type"><i class="fas fa-file-pdf"></i> PDF</span>
+            <span class="resource-difficulty difficulty-intermediate"><i class="fas fa-star"></i><i class="fas fa-star"></i> Intermediate</span>
+            <span><i class="far fa-clock"></i> 20 min</span>
+          </div>
+          <div class="resource-description">
+            Fun research showing how cultural differences affect even emoji usage patterns.
+          </div>
+          <a href="https://arxiv.org/abs/1904.02671" class="btn" target="_blank">Read Article</a>
+        </div>
+      </div>
+    </section>
+    
+    <section id="featured" class="reading-section">
+      <h2 class="category-title"><i class="fas fa-star"></i> Featured Topics</h2>
+      <p>Special focus areas that rotate regularly to highlight important psychological themes.</p>
+      
+      <div class="featured-topics">
+        <div class="topic-card">
+          <h3>跨文化环境中的女性成长心理</h3>
+          <p>Women's Psychological Development in Cross-Cultural Contexts</p>
+          <p>Explore how women's psychological development differs across cultural backgrounds and the challenges of navigating multiple cultural identities.</p>
+          <a href="#" class="btn">Explore Topic</a>
+        </div>
+        
+        <div class="topic-card">
+          <h3>多代同堂对儿童依附关系的影响</h3>
+          <p>Impact of Multigenerational Living on Child Attachment</p>
+          <p>Examine how living with grandparents affects children's attachment styles and emotional development in different cultural settings.</p>
+          <a href="#" class="btn">Explore Topic</a>
+        </div>
+        
+        <div class="topic-card">
+          <h3>如何辨别心理问题 vs 情绪波动</h3>
+          <p>Identifying Psychological Issues vs. Normal Emotional Fluctuations</p>
+          <p>Learn to recognize when emotional changes might indicate deeper psychological concerns versus normal developmental phases.</p>
+          <a href="#" class="btn">Explore Topic</a>
+        </div>
+      </div>
+    </section>
   </main>
   
   <footer id="contact">
@@ -138,16 +467,54 @@
   </footer>
   
   <script>
-    // 搜索功能
+    // Tab functionality
+    function openReadingSection(sectionId) {
+      document.querySelectorAll('.reading-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      
+      document.querySelectorAll('.reading-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      document.getElementById(sectionId).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+    
+    // Search and filter functionality
     document.querySelector('.search-bar').addEventListener('input', function(e) {
       const searchTerm = e.target.value.toLowerCase();
-      const cards = document.querySelectorAll('.resource-card');
+      filterResources(searchTerm, document.getElementById('categoryFilter').value);
+    });
+    
+    document.getElementById('categoryFilter').addEventListener('change', function(e) {
+      const category = e.target.value;
+      filterResources(document.querySelector('.search-bar').value.toLowerCase(), category);
+    });
+    
+    function filterResources(searchTerm, category) {
+      const cards = document.querySelectorAll('.resource-card, .topic-card');
       
       cards.forEach(card => {
-        const text = card.textContent.toLowerCase();
-        card.style.display = text.includes(searchTerm) ? 'block' : 'none';
+        const cardText = card.textContent.toLowerCase();
+        const cardCategory = card.closest('.reading-section').id;
+        let categoryMatch = true;
+        
+        if (category !== 'all') {
+          if (category === 'beginner' && cardCategory !== 'beginner') categoryMatch = false;
+          if (category === 'feminist' && !cardText.includes('feminist')) categoryMatch = false;
+          if (category === 'child' && !cardText.includes('child')) categoryMatch = false;
+          if (category === 'cultural' && !cardText.includes('cultural')) categoryMatch = false;
+          if (category === 'featured' && !card.closest('#featured')) categoryMatch = false;
+        }
+        
+        if (categoryMatch && (searchTerm === '' || cardText.includes(searchTerm))) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
       });
-    });
+    }
   </script>
 </body>
 </html>
