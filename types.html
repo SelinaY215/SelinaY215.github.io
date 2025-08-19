@@ -136,7 +136,7 @@
       <a href="types.html">Digital Exhibition</a>
       <a href="discussions.html">Video Studio</a>
       <a href="science.html">Reading Corner</a>
-      <a href="contact.html">Contact</a> <!-- 已修改此行 -->
+      <a href="contact.html">Contact</a>
     </nav>
   </header>
   
@@ -145,17 +145,17 @@
     <p class="subtitle">Interactive exploration of psychological concepts</p>
     
     <div class="exhibition-tabs">
-      <button class="exhibition-tab active" onclick="openExhibition('women')">Women's Psychology</button>
-      <button class="exhibition-tab" onclick="openExhibition('child')">Child Development</button>
-      <button class="exhibition-tab" onclick="openExhibition('culture')">Cross-Cultural</button>
+      <button class="exhibition-tab active" onclick="openExhibition('science')">Science & Color</button>
+      <button class="exhibition-tab" onclick="openExhibition('types')">Types of Psychology</button>
+      <button class="exhibition-tab" onclick="openExhibition('women')">Women's Psychology</button>
     </div>
     
-    <section id="women" class="exhibition-section active">
-      <h2>Women's Psychological Development</h2>
+    <section id="science" class="exhibition-section active">
+      <h2>Science & Color Psychology</h2>
       
       <div class="video-container">
-        <video controls poster="videos/women_psych_thumb.jpg">
-          <source src="videos/women_psych.mp4" type="video/mp4">
+        <video controls poster="videos/science_color_thumb.jpg">
+          <source src="videos/science_photos_color.mp4" type="video/mp4">
         </video>
       </div>
       
@@ -163,6 +163,40 @@
         <button class="btn" onclick="likeVideo()">❤️ Like</button>
         <button class="btn">💬 Comment</button>
         <button class="btn">↗️ Share</button>
+      </div>
+      
+      <div class="card">
+        <h3>About This Video</h3>
+        <p>Exploring the fascinating connection between color perception and psychological responses. Learn how different colors can affect mood, behavior, and cognitive processes.</p>
+      </div>
+    </section>
+    
+    <section id="types" class="exhibition-section">
+      <h2>Types of Psychology</h2>
+      
+      <div class="video-container">
+        <video controls poster="videos/types_psych_thumb.jpg">
+          <source src="videos/types_of_psych.mp4" type="video/mp4">
+        </video>
+      </div>
+      
+      <div class="quiz-container">
+        <h3>Test Your Knowledge</h3>
+        <p>Which branch of psychology focuses on how cultural factors influence human behavior?</p>
+        
+        <button class="quiz-option" onclick="checkAnswer(this, false)">Clinical Psychology</button>
+        <button class="quiz-option" onclick="checkAnswer(this, true)">Cross-Cultural Psychology</button>
+        <button class="quiz-option" onclick="checkAnswer(this, false)">Developmental Psychology</button>
+      </div>
+    </section>
+    
+    <section id="women" class="exhibition-section">
+      <h2>Women's Psychological Development</h2>
+      
+      <div class="video-container">
+        <video controls poster="videos/women_psych_thumb.jpg">
+          <source src="videos/women_psych.mp4" type="video/mp4">
+        </video>
       </div>
       
       <div class="timeline">
@@ -180,46 +214,6 @@
           <div class="timeline-content">
             Establishment of APA's Division 35 (Psychology of Women)
           </div>
-        </div>
-      </div>
-    </section>
-    
-    <section id="child" class="exhibition-section">
-      <h2>Child Cognitive Development</h2>
-      
-      <div class="video-container">
-        <video controls poster="videos/child_dev_thumb.jpg">
-          <source src="videos/child_development.mp4" type="video/mp4">
-        </video>
-      </div>
-      
-      <div class="quiz-container">
-        <h3>Test Your Knowledge</h3>
-        <p>At what age do children typically develop object permanence?</p>
-        
-        <button class="quiz-option" onclick="checkAnswer(this, true)">8-12 months</button>
-        <button class="quiz-option" onclick="checkAnswer(this, false)">2-3 years</button>
-        <button class="quiz-option" onclick="checkAnswer(this, false)">Birth-3 months</button>
-      </div>
-    </section>
-    
-    <section id="culture" class="exhibition-section">
-      <h2>Cross-Cultural Psychology</h2>
-      
-      <div class="video-container">
-        <video controls poster="videos/culture_thumb.jpg">
-          <source src="videos/cross_cultural.mp4" type="video/mp4">
-        </video>
-      </div>
-      
-      <div class="comparison-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
-        <div class="card">
-          <h3>Western Cultures</h3>
-          <p>Emphasis on individual emotional experience</p>
-        </div>
-        <div class="card">
-          <h3>Eastern Cultures</h3>
-          <p>Focus on social harmony and contextual emotions</p>
         </div>
       </div>
     </section>

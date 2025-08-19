@@ -6,7 +6,7 @@
   <title>Video Studio | Selina's Hub</title>
   <link rel="stylesheet" href="style.css">
   <!-- 预加载首个视频（其他视频按需加载） -->
-  <link rel="preload" href="videos/science_photos_color.mp4" as="video" type="video/mp4">
+  <link rel="preload" href="videos/child_development.mp4" as="video" type="video/mp4">
   <style>
     :root {
       --dark-bg: #1E2A3A;
@@ -28,6 +28,38 @@
       width: 100%;
       display: block;
       background: var(--dark-bg);
+      max-height: 400px; /* 限制视频最大高度 */
+    }
+    
+    /* 优化后的视频容器样式 */
+    .optimized-video-container {
+      position: relative;
+      width: 80%;
+      max-width: 550px;
+      margin: 0 auto;
+      height: 0;
+      padding-bottom: 60%; /* 更合适的比例 */
+      overflow: hidden;
+      border-radius: 12px;
+      background: #000; /* 黑色背景减少突兀感 */
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+    
+    .optimized-video-container video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* 保持原始比例，但尽量填充 */
+    }
+    
+    /* 针对横屏视频的特殊处理 */
+    .optimized-video-container.horizontal video {
+      object-fit: cover; /* 横屏视频使用覆盖模式 */
+      width: 100%;
+      height: 100%;
     }
     
     /* 新增缓冲指示器 */
@@ -48,7 +80,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
-      margin: 1.5rem 0;
+      margin: 1rem 0;
     }
     
     .action-btn {
@@ -102,24 +134,136 @@
       color: var(--text-on-dark);
       opacity: 0.8;
       font-size: 0.9rem;
+      margin: 0.5rem 0;
     }
     
     .video-description {
       background: var(--dark-bg);
       color: var(--text-on-dark);
-      padding: 1.5rem;
+      padding: 1rem;
       border-radius: var(--radius);
-      margin-top: 1rem;
-      font-size: 0.95rem;
-      line-height: 1.6;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    
+    /* 跨文化视频网格布局 */
+    .cultural-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .cultural-video {
+      background: var(--darker-bg);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+      transition: var(--transition);
+    }
+    
+    .cultural-video:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    
+    .cultural-video h3 {
+      color: var(--text-on-dark);
+      margin: 1rem 0 0.5rem;
+      font-size: 1.1rem;
+    }
+    
+    .cultural-video p {
+      color: var(--text-on-dark);
+      opacity: 0.8;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      line-height: 1.5;
     }
     
     body {
       background: var(--light-bg);
     }
     
-    .video-container, .video-description {
+    .video-container, .video-description, .cultural-video {
       border: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    /* 心理学讨论部分样式 */
+    .discussion-section {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-bottom: 3rem;
+      box-shadow: var(--shadow);
+    }
+    
+    .discussion-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    
+    .discussion-card {
+      background: var(--light);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: var(--transition);
+    }
+    
+    .discussion-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .discussion-card h3 {
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+    }
+    
+    .discussion-card p {
+      color: var(--dark);
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+    
+    .discussion-meta {
+      display: flex;
+      justify-content: space-between;
+      color: var(--secondary);
+      font-size: 0.85rem;
+    }
+    
+    /* 隐藏类 */
+    .hidden {
+      display: none;
+    }
+    
+    /* 视频预览样式 */
+    .video-preview {
+      margin-top: 1rem;
+    }
+    
+    @media (max-width: 768px) {
+      .cultural-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .optimized-video-container {
+        width: 90%;
+        padding-bottom: 70%;
+      }
+      
+      .discussion-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .cultural-video {
+        padding: 1rem;
+      }
     }
   </style>
 </head>
@@ -144,29 +288,108 @@
     <p class="subtitle">Student-created content exploring psychological concepts</p>
     
     <div class="video-tabs">
-      <button class="video-tab active" onclick="loadVideo('science')">Science & Color</button>
-      <button class="video-tab" onclick="loadVideo('types')">Types of Psychology</button>
-      <button class="video-tab" onclick="loadVideo('main')">Main Discussion</button>
-      <button class="video-tab" onclick="loadVideo('filmmaking')">Filmmaking Experience</button>
+      <button class="video-tab active" onclick="loadVideo('child')">Child Development</button>
+      <button class="video-tab" onclick="loadVideo('culture')">Cross-Cultural Psychology</button>
     </div>
     
-    <div class="video-container" id="mainVideoContainer">
+    <!-- 心理学讨论部分 - 只在Child Development显示 -->
+    <div id="discussionSection" class="discussion-section">
+      <h2>Psychology Discussions</h2>
+      <p>Explore various psychological topics through these student-led discussions.</p>
+      
+      <div class="discussion-grid">
+        <div class="discussion-card">
+          <h3>Understanding Cognitive Biases</h3>
+          <p>How our thinking patterns can sometimes lead us astray and how to recognize these mental shortcuts.</p>
+          <div class="discussion-meta">
+            <span>Length: 8:30</span>
+            <span>Views: 287</span>
+          </div>
+        </div>
+        
+        <div class="discussion-card">
+          <h3>Emotional Intelligence in Daily Life</h3>
+          <p>Practical ways to develop emotional awareness and apply it in relationships and decision-making.</p>
+          <div class="discussion-meta">
+            <span>Length: 10:15</span>
+            <span>Views: 342</span>
+          </div>
+        </div>
+        
+        <div class="discussion-card">
+          <h3>Mental Health Stigma</h3>
+          <p>Examining societal attitudes toward mental health and how we can work to reduce prejudice.</p>
+          <div class="discussion-meta">
+            <span>Length: 12:40</span>
+            <span>Views: 419</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 主视频容器 - 只在Child Development显示 -->
+    <div id="mainVideoContainer" class="video-container">
       <!-- 缓冲指示器 -->
       <div class="buffering-indicator" id="bufferingIndicator">加载中...</div>
       
       <video controls id="mainVideoPlayer" preload="auto" playsinline>
-        <source src="videos/science_photos_color.mp4" type="video/mp4">
+        <source src="videos/child_development.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
-      <p class="current-video-title">Science & Color Psychology</p>
-      <p class="video-meta">Length: 14:30 | Views: 723</p>
+      <p class="current-video-title">Child Cognitive Development</p>
+      <p class="video-meta">Length: 12:45 | Views: 589</p>
       
       <div class="video-description" id="videoDescription">
-        Exploring the fascinating connection between color perception and psychological responses.
+        Exploring the stages of cognitive development in children and how they perceive the world around them.
       </div>
       
       <div class="video-actions">
         <button class="action-btn" onclick="shareVideo()">↗️ Share</button>
+      </div>
+    </div>
+    
+    <!-- 跨文化部分 - 只在Cross-Cultural Psychology显示 -->
+    <div id="culturalContent" class="hidden">
+      <h2>Cross-Cultural Psychology Explorations</h2>
+      <p>Discover how culture shapes psychological processes and behaviors across different societies.</p>
+      
+      <!-- 优化后的心理学讨论视频 -->
+      <div class="cultural-video">
+        <h3>Cross-Cultural Psychology Discussion</h3>
+        <div class="optimized-video-container horizontal">
+          <video controls>
+            <source src="videos/psych_discussions.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <p>An in-depth discussion about psychological concepts and theories from a cross-cultural perspective.</p>
+        <p class="video-meta">Length: 14:30 | Views: 512</p>
+      </div>
+      
+      <div class="cultural-grid">
+        <div class="cultural-video">
+          <h3>Mongolian Filmmaking Experience</h3>
+          <div class="optimized-video-container">
+            <video controls>
+              <source src="videos/mongolian_filmmaking.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <p>My experience participating in a microfilm project in Mongolia, exploring cultural storytelling techniques.</p>
+          <p class="video-meta">Length: 12:20 | Views: 356</p>
+        </div>
+        
+        <div class="cultural-video">
+          <h3>Indian Cultural Insights</h3>
+          <div class="optimized-video-container">
+            <video controls>
+              <source src="videos/indian_culture_insights.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <p>A deep dive into Indian cultural psychology, exploring traditions, family dynamics, and collective identity.</p>
+          <p class="video-meta">Length: 9:45 | Views: 421</p>
+        </div>
       </div>
     </div>
   </main>
@@ -212,38 +435,29 @@
     function loadVideo(videoType) {
       const videoPlayer = document.getElementById('mainVideoPlayer');
       const bufferingIndicator = document.getElementById('bufferingIndicator');
+      const culturalContent = document.getElementById('culturalContent');
+      const discussionSection = document.getElementById('discussionSection');
+      const mainVideoContainer = document.getElementById('mainVideoContainer');
       
       // 显示缓冲状态
       bufferingIndicator.style.display = 'block';
       
       let videoData = {
-        'science': {
-          src: 'videos/science_photos_color.mp4',
-          title: 'Science & Color Psychology',
-          length: '14:30',
-          views: '723',
-          desc: 'Exploring the fascinating connection between color perception and psychological responses.'
-        },
-        'types': {
-          src: 'videos/types_of_psych.mp4',
-          title: 'Types of Psychology',
-          length: '16:15',
+        'child': {
+          src: 'videos/child_development.mp4',
+          title: 'Child Cognitive Development',
+          length: '12:45',
           views: '589',
-          desc: 'An overview of major branches of psychology and their applications.'
+          desc: 'Exploring the stages of cognitive development in children and how they perceive the world around them.',
+          showCultural: false
         },
-        'main': {
-          src: 'videos/psych_discussions.mp4',
-          title: 'Main Psychology Discussion',
-          length: '18:42',
-          views: '1,245',
-          desc: 'In-depth conversations about current topics in psychology.'
-        },
-        'filmmaking': {
-          src: 'videos/filmmaking_experience.mp4',
-          title: 'My Filmmaking Experience',
-          length: '12:20',
-          views: '356',
-          desc: 'Microfilm I participated in as part of the filming crew. This video documents my hands-on experience in film production and storytelling techniques.'
+        'culture': {
+          src: 'videos/cross_cultural.mp4',
+          title: 'Cross-Cultural Psychology',
+          length: '15:20',
+          views: '723',
+          desc: 'Examining how cultural factors shape psychological processes and behaviors across different societies.',
+          showCultural: true
         }
       };
 
@@ -260,6 +474,19 @@
       document.querySelector('.current-video-title').textContent = data.title;
       document.querySelector('.video-meta').textContent = `Length: ${data.length} | Views: ${data.views}`;
       document.getElementById('videoDescription').textContent = data.desc;
+      
+      // 显示或隐藏内容
+      if (data.showCultural) {
+        // 显示跨文化内容，隐藏其他
+        culturalContent.classList.remove('hidden');
+        discussionSection.classList.add('hidden');
+        mainVideoContainer.classList.add('hidden');
+      } else {
+        // 显示Child Development内容，隐藏跨文化
+        culturalContent.classList.add('hidden');
+        discussionSection.classList.remove('hidden');
+        mainVideoContainer.classList.remove('hidden');
+      }
       
       // 更新标签页状态
       document.querySelectorAll('.video-tab').forEach(tab => {
