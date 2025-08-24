@@ -181,7 +181,7 @@
   <header>
     <div class="logo-container">
       <img src="images/redheart.png" alt="Mental Health Heart Logo" class="heart-logo">
-      <span class="site-title">Selina's Mental Health Hub</span>
+      <span class="site-title">Selina's Socio-Cultural Lens</span>
     </div>
     
     <nav>
@@ -194,7 +194,7 @@
   </header>
   
   <main class="container">
-    <h1>Psychology Reading Corner</h1>
+    <h1>Reading Corner</h1>
     <p class="subtitle">Curated resources for psychology enthusiasts at all levels</p>
     
     <div class="search-container">
@@ -439,21 +439,21 @@
         <div class="topic-card">
           <h3>跨文化环境中的女性成长心理</h3>
           <p>Women's Psychological Development in Cross-Cultural Contexts</p>
-          <p>Explore how women's psychological development differs across cultural backgrounds and the challenges of navigating multiple cultural identities.</p>
+          <p>Explore how women's psychological development differs across cultural backgrounds and the unique challenges they face.</p>
           <a href="#" class="btn">Explore Topic</a>
         </div>
         
         <div class="topic-card">
-          <h3>多代同堂对儿童依附关系的影响</h3>
-          <p>Impact of Multigenerational Living on Child Attachment</p>
-          <p>Examine how living with grandparents affects children's attachment styles and emotional development in different cultural settings.</p>
+          <h3>数字媒体与青少年心理</h3>
+          <p>Digital Media & Adolescent Psychology</p>
+          <p>Understanding how social media and digital platforms affect the psychological development of young people.</p>
           <a href="#" class="btn">Explore Topic</a>
         </div>
         
         <div class="topic-card">
-          <h3>如何辨别心理问题 vs 情绪波动</h3>
-          <p>Identifying Psychological Issues vs. Normal Emotional Fluctuations</p>
-          <p>Learn to recognize when emotional changes might indicate deeper psychological concerns versus normal developmental phases.</p>
+          <h3>文化适应与心理健康</h3>
+          <p>Cultural Adaptation & Mental Health</p>
+          <p>Examining the psychological impact of adapting to new cultural environments and maintaining mental wellbeing.</p>
           <a href="#" class="btn">Explore Topic</a>
         </div>
       </div>
@@ -462,59 +462,34 @@
   
   <footer id="contact">
     <div class="container">
-      <p>© 2025 Selina's Mental Health Hub. All rights reserved.</p>
+      <p>© 2025 Selina's Socio-Cultural Lens. All rights reserved.</p>
     </div>
   </footer>
   
   <script>
-    // Tab functionality
     function openReadingSection(sectionId) {
+      // Hide all sections
       document.querySelectorAll('.reading-section').forEach(section => {
         section.classList.remove('active');
       });
       
+      // Deactivate all tabs
       document.querySelectorAll('.reading-tab').forEach(tab => {
         tab.classList.remove('active');
       });
       
+      // Show selected section and activate tab
       document.getElementById(sectionId).classList.add('active');
       event.currentTarget.classList.add('active');
     }
     
-    // Search and filter functionality
-    document.querySelector('.search-bar').addEventListener('input', function(e) {
-      const searchTerm = e.target.value.toLowerCase();
-      filterResources(searchTerm, document.getElementById('categoryFilter').value);
+    // Filter functionality
+    document.getElementById('categoryFilter').addEventListener('change', function() {
+      const category = this.value;
+      if(category !== 'all') {
+        openReadingSection(category);
+      }
     });
-    
-    document.getElementById('categoryFilter').addEventListener('change', function(e) {
-      const category = e.target.value;
-      filterResources(document.querySelector('.search-bar').value.toLowerCase(), category);
-    });
-    
-    function filterResources(searchTerm, category) {
-      const cards = document.querySelectorAll('.resource-card, .topic-card');
-      
-      cards.forEach(card => {
-        const cardText = card.textContent.toLowerCase();
-        const cardCategory = card.closest('.reading-section').id;
-        let categoryMatch = true;
-        
-        if (category !== 'all') {
-          if (category === 'beginner' && cardCategory !== 'beginner') categoryMatch = false;
-          if (category === 'feminist' && !cardText.includes('feminist')) categoryMatch = false;
-          if (category === 'child' && !cardText.includes('child')) categoryMatch = false;
-          if (category === 'cultural' && !cardText.includes('cultural')) categoryMatch = false;
-          if (category === 'featured' && !card.closest('#featured')) categoryMatch = false;
-        }
-        
-        if (categoryMatch && (searchTerm === '' || cardText.includes(searchTerm))) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    }
   </script>
 </body>
 </html>

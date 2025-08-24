@@ -3,30 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Digital Exhibition | Selina's Hub</title>
+  <title>Digital Exhibition Hub | Selina's Hub</title>
   <link rel="stylesheet" href="style.css">
   <style>
     .exhibition-tabs {
       display: flex;
       justify-content: center;
-      margin: 2rem 0;
+      margin: 2rem 0 3rem;
       flex-wrap: wrap;
-      gap: 1rem;
+      gap: 0.8rem;
     }
     
     .exhibition-tab {
       padding: 1rem 2rem;
-      background: var(--accent);
-      border: none;
+      background: rgba(168, 218, 220, 0.2);
+      border: 2px solid transparent;
       border-radius: 50px;
       cursor: pointer;
       font-weight: 600;
       transition: var(--transition);
+      color: var(--dark);
+    }
+    
+    .exhibition-tab:hover {
+      background: rgba(168, 218, 220, 0.4);
+      transform: translateY(-2px);
     }
     
     .exhibition-tab.active {
       background: var(--primary);
       color: white;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
     }
     
     .exhibition-section {
@@ -38,60 +46,90 @@
       display: block;
     }
     
+    .exhibition-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+    
+    .exhibition-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
+    
     .video-container {
       margin: 2rem 0;
       border-radius: var(--radius);
       overflow: hidden;
-    }
-    
-    .timeline {
-      margin: 3rem 0;
       position: relative;
-      padding-left: 50px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     }
     
-    .timeline:before {
-      content: '';
-      position: absolute;
-      left: 20px;
-      top: 0;
-      bottom: 0;
-      width: 4px;
-      background: var(--accent);
+    .video-container video {
+      width: 100%;
+      display: block;
+      border-radius: var(--radius);
     }
     
-    .timeline-item {
-      position: relative;
-      margin-bottom: 2rem;
-      padding-bottom: 2rem;
-    }
-    
-    .timeline-item:last-child {
-      margin-bottom: 0;
-      padding-bottom: 0;
-    }
-    
-    .timeline-year {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 40px;
-      height: 40px;
-      background: var(--primary);
-      color: white;
-      border-radius: 50%;
+    .video-actions {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
+      gap: 1rem;
+      margin: 1.5rem 0;
+      flex-wrap: wrap;
     }
     
-    .timeline-content {
-      background: white;
+    .video-description {
+      background: var(--light);
       padding: 1.5rem;
       border-radius: var(--radius);
-      margin-left: 60px;
+      margin: 1.5rem 0;
+      border-left: 4px solid var(--accent);
+    }
+    
+    .thumbnail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .thumbnail-item {
+      border-radius: var(--radius);
+      overflow: hidden;
       box-shadow: var(--shadow);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    
+    .thumbnail-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    
+    .thumbnail-item img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+    }
+    
+    .thumbnail-info {
+      padding: 1rem;
+      background: white;
+    }
+    
+    .thumbnail-info h4 {
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+    }
+    
+    .thumbnail-info p {
+      color: var(--secondary);
+      font-size: 0.9rem;
     }
     
     .quiz-container {
@@ -99,28 +137,76 @@
       padding: 2rem;
       border-radius: var(--radius);
       margin: 2rem 0;
+      box-shadow: var(--shadow);
+    }
+    
+    .quiz-question {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      color: var(--dark);
+      font-weight: 600;
     }
     
     .quiz-option {
       display: block;
       width: 100%;
-      padding: 1rem;
+      padding: 1rem 1.5rem;
       margin: 0.5rem 0;
       background: var(--light);
-      border: none;
+      border: 2px solid transparent;
       border-radius: var(--radius);
       cursor: pointer;
       transition: var(--transition);
       text-align: left;
+      font-size: 1rem;
     }
     
     .quiz-option:hover {
       background: var(--accent);
+      border-color: var(--secondary);
+    }
+    
+    .quiz-feedback {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: var(--radius);
+      display: none;
+    }
+    
+    .quiz-correct {
+      background: rgba(76, 175, 80, 0.1);
+      color: #2e7d32;
+      border-left: 4px solid #4CAF50;
+    }
+    
+    .quiz-incorrect {
+      background: rgba(244, 67, 54, 0.1);
+      color: #c62828;
+      border-left: 4px solid #F44336;
     }
     
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @media (max-width: 768px) {
+      .exhibition-tab {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+      }
+      
+      .exhibition-card {
+        padding: 1.5rem;
+      }
+      
+      .video-actions {
+        justify-content: center;
+      }
+      
+      .thumbnail-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -128,12 +214,12 @@
   <header>
     <div class="logo-container">
       <img src="images/redheart.png" alt="Mental Health Heart Logo" class="heart-logo">
-      <span class="site-title">Selina's Mental Health Hub</span>
+      <span class="site-title">Selina's Socio-Cultural Lens</span>
     </div>
     
     <nav>
       <a href="index.html">Home</a>
-      <a href="types.html">Digital Exhibition</a>
+      <a href="types.html" class="active">Digital Exhibition</a>
       <a href="discussions.html">Video Studio</a>
       <a href="science.html">Reading Corner</a>
       <a href="contact.html">Contact</a>
@@ -141,79 +227,91 @@
   </header>
   
   <main class="container">
-    <h1>Digital Psychology Exhibition</h1>
-    <p class="subtitle">Interactive exploration of psychological concepts</p>
+    <h1>Digital Exhibition Hub</h1>
+    <p class="subtitle">Interactive exploration of psychological concepts through media</p>
     
     <div class="exhibition-tabs">
       <button class="exhibition-tab active" onclick="openExhibition('science')">Science & Color</button>
-      <button class="exhibition-tab" onclick="openExhibition('types')">Types of Psychology</button>
-      <button class="exhibition-tab" onclick="openExhibition('women')">Women's Psychology</button>
+      <button class="exhibition-tab" onclick="openExhibition('types')">Psychological Perspectives</button>
     </div>
     
     <section id="science" class="exhibition-section active">
-      <h2>Science & Color Psychology</h2>
-      
-      <div class="video-container">
-        <video controls poster="videos/science_color_thumb.jpg">
-          <source src="videos/science_photos_color.mp4" type="video/mp4">
-        </video>
-      </div>
-      
-      <div class="video-actions">
-        <button class="btn" onclick="likeVideo()">❤️ Like</button>
-        <button class="btn">💬 Comment</button>
-        <button class="btn">↗️ Share</button>
-      </div>
-      
-      <div class="card">
-        <h3>About This Video</h3>
-        <p>Exploring the fascinating connection between color perception and psychological responses. Learn how different colors can affect mood, behavior, and cognitive processes.</p>
+      <div class="exhibition-card">
+        <h2>The Science of Color Psychology</h2>
+        <p>Explore how colors influence human behavior, emotions, and decision-making processes.</p>
+        
+        <div class="video-container">
+          <video controls poster="videos/science_color_thumb.jpg">
+            <source src="videos/science_photos_color.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        
+        <div class="video-actions">
+          <button class="btn" onclick="likeVideo()">❤️ Like</button>
+          <button class="btn">💬 Comment</button>
+          <button class="btn">↗️ Share</button>
+        </div>
+        
+        <div class="video-description">
+          <h3>About This Video</h3>
+          <p>This exploration delves into the fascinating connection between color perception and psychological responses. Learn how different colors can affect mood, behavior, and cognitive processes in various contexts from marketing to therapeutic environments.</p>
+        </div>
+        
+        <h3>Related Content</h3>
+        <div class="thumbnail-grid">
+          <div class="thumbnail-item">
+            <img src="images/color_psych_thumb1.jpg" alt="Color and Emotion">
+            <div class="thumbnail-info">
+              <h4>Color & Emotional Response</h4>
+              <p>How hues influence feelings</p>
+            </div>
+          </div>
+          <div class="thumbnail-item">
+            <img src="images/color_psych_thumb2.jpg" alt="Cultural Color Meanings">
+            <div class="thumbnail-info">
+              <h4>Cultural Color Symbolism</h4>
+              <p>Colors across different societies</p>
+            </div>
+          </div>
+          <div class="thumbnail-item">
+            <img src="images/color_psych_thumb3.jpg" alt="Color Therapy">
+            <div class="thumbnail-info">
+              <h4>Therapeutic Use of Color</h4>
+              <p>Healing through color exposure</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
     
     <section id="types" class="exhibition-section">
-      <h2>Types of Psychology</h2>
-      
-      <div class="video-container">
-        <video controls poster="videos/types_psych_thumb.jpg">
-          <source src="videos/types_of_psych.mp4" type="video/mp4">
-        </video>
-      </div>
-      
-      <div class="quiz-container">
-        <h3>Test Your Knowledge</h3>
-        <p>Which branch of psychology focuses on how cultural factors influence human behavior?</p>
+      <div class="exhibition-card">
+        <h2>Psychological Perspectives</h2>
+        <p>Understanding the different approaches to studying human behavior and mental processes.</p>
         
-        <button class="quiz-option" onclick="checkAnswer(this, false)">Clinical Psychology</button>
-        <button class="quiz-option" onclick="checkAnswer(this, true)">Cross-Cultural Psychology</button>
-        <button class="quiz-option" onclick="checkAnswer(this, false)">Developmental Psychology</button>
-      </div>
-    </section>
-    
-    <section id="women" class="exhibition-section">
-      <h2>Women's Psychological Development</h2>
-      
-      <div class="video-container">
-        <video controls poster="videos/women_psych_thumb.jpg">
-          <source src="videos/women_psych.mp4" type="video/mp4">
-        </video>
-      </div>
-      
-      <div class="timeline">
-        <h3>Key Milestones in Feminist Psychology</h3>
-        
-        <div class="timeline-item">
-          <div class="timeline-year">1960s</div>
-          <div class="timeline-content">
-            First wave of feminist psychology challenging male-dominated theories
-          </div>
+        <div class="video-container">
+          <video controls poster="videos/types_psych_thumb.jpg">
+            <source src="videos/types_of_psych.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
         </div>
         
-        <div class="timeline-item">
-          <div class="timeline-year">1974</div>
-          <div class="timeline-content">
-            Establishment of APA's Division 35 (Psychology of Women)
-          </div>
+        <div class="quiz-container">
+          <h3>Test Your Knowledge</h3>
+          <div class="quiz-question">Which branch of psychology focuses on how cultural factors influence human behavior?</div>
+          
+          <button class="quiz-option" onclick="checkAnswer(this, false)">Clinical Psychology</button>
+          <button class="quiz-option" onclick="checkAnswer(this, true)">Cross-Cultural Psychology</button>
+          <button class="quiz-option" onclick="checkAnswer(this, false)">Developmental Psychology</button>
+          <button class="quiz-option" onclick="checkAnswer(this, false)">Cognitive Psychology</button>
+          
+          <div id="quizFeedback" class="quiz-feedback"></div>
+        </div>
+        
+        <div class="video-description">
+          <h3>Understanding Psychological Approaches</h3>
+          <p>This video explores the major perspectives in psychology, from behavioral and cognitive to humanistic and cross-cultural approaches. Each offers unique insights into why we think, feel, and behave the way we do.</p>
         </div>
       </div>
     </section>
@@ -221,7 +319,7 @@
   
   <footer id="contact">
     <div class="container">
-      <p>© 2025 Selina's Mental Health Hub. All rights reserved.</p>
+      <p>© 2025 Selina's Socio-Cultural Lens. All rights reserved.</p>
     </div>
   </footer>
   
@@ -240,16 +338,48 @@
       // Show selected section and activate tab
       document.getElementById(sectionId).classList.add('active');
       event.currentTarget.classList.add('active');
+      
+      // Scroll to top of section
+      document.getElementById(sectionId).scrollIntoView({behavior: 'smooth'});
     }
     
     function checkAnswer(button, isCorrect) {
+      const feedback = document.getElementById('quizFeedback');
+      const allOptions = document.querySelectorAll('.quiz-option');
+      
+      // Disable all options after selection
+      allOptions.forEach(opt => {
+        opt.style.pointerEvents = 'none';
+      });
+      
       if(isCorrect) {
-        button.style.background = 'var(--secondary)';
-        button.style.color = 'white';
+        button.style.background = 'rgba(76, 175, 80, 0.2)';
+        button.style.borderColor = '#4CAF50';
+        button.style.color = '#2e7d32';
+        feedback.textContent = 'Correct! Cross-cultural psychology examines how cultural factors shape human behavior.';
+        feedback.className = 'quiz-feedback quiz-correct';
       } else {
-        button.style.background = '#ff6b6b';
-        button.style.color = 'white';
+        button.style.background = 'rgba(244, 67, 54, 0.2)';
+        button.style.borderColor = '#F44336';
+        button.style.color = '#c62828';
+        feedback.textContent = 'Not quite. The correct answer is Cross-Cultural Psychology, which studies how cultural factors influence human behavior.';
+        feedback.className = 'quiz-feedback quiz-incorrect';
+        
+        // Highlight correct answer
+        allOptions.forEach(opt => {
+          if(opt.textContent === 'Cross-Cultural Psychology') {
+            opt.style.background = 'rgba(76, 175, 80, 0.2)';
+            opt.style.borderColor = '#4CAF50';
+            opt.style.color = '#2e7d32';
+          }
+        });
       }
+      
+      feedback.style.display = 'block';
+    }
+    
+    function likeVideo() {
+      alert('Thanks for your feedback! This feature will be fully implemented soon.');
     }
   </script>
 </body>

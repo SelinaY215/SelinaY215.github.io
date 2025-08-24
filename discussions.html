@@ -15,22 +15,6 @@
       --text-on-dark: #E0E6ED;
     }
     
-    .video-container {
-      position: relative;
-      margin-bottom: 2rem;
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: var(--darker-bg);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    
-    video {
-      width: 100%;
-      display: block;
-      background: var(--dark-bg);
-      max-height: 400px; /* 限制视频最大高度 */
-    }
-    
     /* 优化后的视频容器样式 */
     .optimized-video-container {
       position: relative;
@@ -147,47 +131,36 @@
       line-height: 1.5;
     }
     
-    /* 跨文化视频网格布局 */
-    .cultural-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin-top: 2rem;
+    /* 跨文化视频选项卡布局 */
+    .cultural-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 2rem 0;
     }
     
-    .cultural-video {
-      background: var(--darker-bg);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      text-align: center;
+    .cultural-tab {
+      padding: 0.8rem 1.5rem;
+      background: var(--accent);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
       transition: var(--transition);
     }
     
-    .cultural-video:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    .cultural-tab.active {
+      background: var(--primary);
+      color: white;
     }
     
-    .cultural-video h3 {
-      color: var(--text-on-dark);
-      margin: 1rem 0 0.5rem;
-      font-size: 1.1rem;
+    .cultural-content {
+      display: none;
+      animation: fadeIn 0.5s ease;
     }
     
-    .cultural-video p {
-      color: var(--text-on-dark);
-      opacity: 0.8;
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
-      line-height: 1.5;
-    }
-    
-    body {
-      background: var(--light-bg);
-    }
-    
-    .video-container, .video-description, .cultural-video {
-      border: 1px solid rgba(255,255,255,0.1);
+    .cultural-content.active {
+      display: block;
     }
     
     /* 心理学讨论部分样式 */
@@ -241,17 +214,19 @@
       display: none;
     }
     
-    /* 视频预览样式 */
-    .video-preview {
-      margin-top: 1rem;
+    /* 主视频播放器样式 */
+    .main-video-player {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
     @media (max-width: 768px) {
-      .cultural-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-      
       .optimized-video-container {
         width: 90%;
         padding-bottom: 70%;
@@ -261,8 +236,14 @@
         grid-template-columns: 1fr;
       }
       
-      .cultural-video {
-        padding: 1rem;
+      .cultural-tabs {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .cultural-tab {
+        width: 100%;
+        text-align: center;
       }
     }
   </style>
@@ -289,7 +270,7 @@
     
     <div class="video-tabs">
       <button class="video-tab active" onclick="loadVideo('child')">Child Development</button>
-      <button class="video-tab" onclick="loadVideo('culture')">Cross-Cultural Psychology</button>
+      <button class="video-tab" onclick="loadVideo('culture')">Cross-Cultural Child Socialization</button>
     </div>
     
     <!-- 心理学讨论部分 - 只在Child Development显示 -->
@@ -348,47 +329,78 @@
       </div>
     </div>
     
-    <!-- 跨文化部分 - 只在Cross-Cultural Psychology显示 -->
+    <!-- 跨文化部分 - 只在Cross-Cultural Child Socialization显示 -->
     <div id="culturalContent" class="hidden">
-      <h2>Cross-Cultural Psychology Explorations</h2>
-      <p>Discover how culture shapes psychological processes and behaviors across different societies.</p>
+      <h2>Cross-Cultural Child Socialization</h2>
+      <p>Discover how different cultures approach child socialization and development.</p>
       
-      <!-- 优化后的心理学讨论视频 -->
-      <div class="cultural-video">
-        <h3>Cross-Cultural Psychology Discussion</h3>
-        <div class="optimized-video-container horizontal">
-          <video controls>
-            <source src="videos/psych_discussions.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-        <p>An in-depth discussion about psychological concepts and theories from a cross-cultural perspective.</p>
-        <p class="video-meta">Length: 14:30 | Views: 512</p>
+      <!-- 文化选择选项卡 -->
+      <div class="cultural-tabs">
+        <button class="cultural-tab active" onclick="openCulturalTab('overview')">Overview</button>
+        <button class="cultural-tab" onclick="openCulturalTab('mongolian')">Mongolian</button>
+        <button class="cultural-tab" onclick="openCulturalTab('indian')">Indian</button>
       </div>
       
-      <div class="cultural-grid">
-        <div class="cultural-video">
-          <h3>Mongolian Filmmaking Experience</h3>
+      <!-- 总览内容 -->
+      <div id="culturalOverview" class="cultural-content active">
+        <!-- 主视频播放器 -->
+        <div class="main-video-player">
+          <div class="optimized-video-container horizontal">
+            <video controls id="culturalMainVideo">
+              <source src="videos/psych_discussions.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <p class="current-video-title">Cross-Cultural Child Socialization Discussion</p>
+          <p class="video-meta">Length: 14:30 | Views: 512</p>
+          <div class="video-description">
+            An in-depth discussion about how different cultures approach child socialization and development.
+          </div>
+        </div>
+        
+        <h3 style="margin-top: 2rem;">Explore Specific Cultural Examples</h3>
+        <p>Select one of the culture tabs above to view detailed videos about child socialization practices in different cultures.</p>
+      </div>
+      
+      <!-- 蒙古文化内容 -->
+      <div id="culturalMongolian" class="cultural-content">
+        <div class="main-video-player">
           <div class="optimized-video-container">
-            <video controls>
+            <video controls id="mongolianVideo">
               <source src="videos/mongolian_filmmaking.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
           </div>
-          <p>My experience participating in a microfilm project in Mongolia, exploring cultural storytelling techniques.</p>
+          <p class="current-video-title">Mongolian Child Socialization</p>
           <p class="video-meta">Length: 12:20 | Views: 356</p>
+          <div class="video-description">
+            Explore how Mongolian culture approaches child-rearing and socialization practices. This video examines the unique aspects of Mongolian family dynamics, the role of community in child development, and traditional values that shape childhood experiences in Mongolian society.
+          </div>
         </div>
         
-        <div class="cultural-video">
-          <h3>Indian Cultural Insights</h3>
+        <div class="video-actions">
+          <button class="action-btn" onclick="shareCulturalVideo('Mongolian Child Socialization')">↗️ Share This Video</button>
+        </div>
+      </div>
+      
+      <!-- 印度文化内容 -->
+      <div id="culturalIndian" class="cultural-content">
+        <div class="main-video-player">
           <div class="optimized-video-container">
-            <video controls>
+            <video controls id="indianVideo">
               <source src="videos/indian_culture_insights.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
           </div>
-          <p>A deep dive into Indian cultural psychology, exploring traditions, family dynamics, and collective identity.</p>
+          <p class="current-video-title">Indian Child Socialization</p>
           <p class="video-meta">Length: 9:45 | Views: 421</p>
+          <div class="video-description">
+            Discover Indian cultural approaches to child development and family dynamics. This video explores the influence of extended family structures, educational expectations, and the balance between traditional values and modernization in shaping Indian childhood experiences.
+          </div>
+        </div>
+        
+        <div class="video-actions">
+          <button class="action-btn" onclick="shareCulturalVideo('Indian Child Socialization')">↗️ Share This Video</button>
         </div>
       </div>
     </div>
@@ -452,11 +464,11 @@
           showCultural: false
         },
         'culture': {
-          src: 'videos/cross_cultural.mp4',
-          title: 'Cross-Cultural Psychology',
-          length: '15:20',
-          views: '723',
-          desc: 'Examining how cultural factors shape psychological processes and behaviors across different societies.',
+          src: 'videos/psych_discussions.mp4',
+          title: 'Cross-Cultural Child Socialization Discussion',
+          length: '14:30',
+          views: '512',
+          desc: 'An in-depth discussion about how different cultures approach child socialization and development.',
           showCultural: true
         }
       };
@@ -481,6 +493,9 @@
         culturalContent.classList.remove('hidden');
         discussionSection.classList.add('hidden');
         mainVideoContainer.classList.add('hidden');
+        
+        // 设置跨文化主视频
+        document.getElementById('culturalMainVideo').src = data.src;
       } else {
         // 显示Child Development内容，隐藏跨文化
         culturalContent.classList.add('hidden');
@@ -492,6 +507,23 @@
       document.querySelectorAll('.video-tab').forEach(tab => {
         tab.classList.remove('active');
       });
+      event.currentTarget.classList.add('active');
+    }
+    
+    // 打开文化选项卡
+    function openCulturalTab(cultureType) {
+      // 隐藏所有文化内容
+      document.querySelectorAll('.cultural-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      
+      // 取消所有标签激活状态
+      document.querySelectorAll('.cultural-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // 显示选中的内容并激活标签
+      document.getElementById('cultural' + cultureType.charAt(0).toUpperCase() + cultureType.slice(1)).classList.add('active');
       event.currentTarget.classList.add('active');
     }
     
@@ -508,6 +540,21 @@
         });
       } else {
         alert(`Share this video: ${currentVideo}\nURL: ${window.location.href}`);
+      }
+    }
+    
+    // 分享文化视频
+    function shareCulturalVideo(videoTitle) {
+      if (navigator.share) {
+        navigator.share({
+          title: videoTitle,
+          text: 'Check out this interesting cultural psychology video',
+          url: window.location.href
+        }).catch(err => {
+          console.log('Error sharing:', err);
+        });
+      } else {
+        alert(`Share this video: ${videoTitle}\nURL: ${window.location.href}`);
       }
     }
   </script>
